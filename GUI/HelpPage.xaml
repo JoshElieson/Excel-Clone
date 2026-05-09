@@ -1,0 +1,61 @@
+<!-- 
+    Author: Aspen Tobler and Josh Elieson
+    Date:   Spring 2024
+    
+    This is a help page that is pushed to the top of another page and then removed when a button is pressed.
+  -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GUI.HelpPage"
+             Title="Information">
+
+    <ScrollView>
+        <StackLayout Padding="10" Spacing="20">
+            <Label Text="How to use this Spreadsheet" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" />
+
+            <Label Text="The basics of this spreadsheet act similar to ones available through Excel or Google Sheets with less functionality. Each cell is editable, allowing for users to input numbers, strings, or formulas. If the input is a number or string, the contents and value of that cell are the same. If the input is a formula (which can be indicated by inputting an equals sign = before the formula) then the contents is the formula and the value is the calculated formula." />
+
+            <Label Text="Examples:" />
+
+            <Label Text="Input: 4              Cell Content: 4             Cell Value: 4"/>
+
+            <Label Text="Input: Hello       Cell Content: Hello       Cell Value: Hello"/>
+
+            <Label Text="Input: =5*5        Cell Content: =5*5        Cell Value: 25"/>
+
+            <Label Text="This spreadsheet also has the ability to call other cell names as variables when evaluating formulas, similar to Excel. For example, if cell A1 contains 5, then if cell A2 contains the formula A1+1, then the value of cell A2 will be 6."/>
+
+            <Label Text="Examples:" />
+
+            <Label Text="Cell Name: A1        Input: 3             Cell Content: 3            Cell Value: 3"/>
+
+            <Label Text="Cell Name: A2        Input: =A1        Cell Content: =A1        Cell Value: 3"/>
+
+            <Label Text="Cell Name: A2        Input: =A1        Cell Content: =A1        Cell Value: 3"/>
+
+            <Label Text="Notes: If a formula is inputted incorrectly, an error message will either appear in the cell or as a display alert. In order to get full functionality, ensure you press enter after entering contents into cells. This allows for the focus to move to the cell below and for each cell that is dependent on the one being edited to be recalculated."/>
+
+            <Label Text="Other functionalities include a Save, Open, and New option."/>
+            
+            <Label Text="Save: Allows users to enter a file name for their spreadsheet to be saved under. The spreadsheet the user wants to save is translated to XML and then saved to a text file (.sprd)."/>
+
+            <Label Text="Open: Allows users to choose a file with FilePicker to open. The file has to be written in XML in order to be read in. If an error occurs, an error message is displayed."/>
+
+            <Label Text="New: Allows users to clear the current spreadsheet they are working on. If there is content that has not been saved, a warning message pops up asking the user if they are sure they want to clear the spreadsheet."/>
+
+            <Label Text="Special Feature: This spreadsheet also allows users to change the text color of cells. This can be done by selecting a color from the dropdown menu at the top left of the spreadsheet."/>
+
+            <BoxView HeightRequest="1" BackgroundColor="Black" HorizontalOptions="FillAndExpand" Margin="0,10,0,10" />
+
+            <Label Text="Press the button below to return to the spreadsheet."/>
+
+            <Button
+            x:Name="ReturnToMainPageButton"
+            Text="Return to Application"
+            HorizontalOptions="Center"/>
+        </StackLayout>
+
+
+    </ScrollView>
+
+</ContentPage>

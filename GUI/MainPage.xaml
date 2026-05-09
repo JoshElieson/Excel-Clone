@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="GUI.MainPage">
+
+    <ContentPage.MenuBarItems>
+        <MenuBarItem Text="File">
+            <MenuFlyoutItem Text="Help"  Clicked="HelpInformation"/>
+            <MenuFlyoutItem Text="New" Clicked="FileMenuNew"/>
+            <MenuFlyoutItem Text="Open" Clicked="OpenSpreadsheet"/>
+            <MenuFlyoutItem Text="Save" Clicked="SaveSpreadsheet"/>
+        </MenuBarItem>
+
+        <MenuBarItem Text="Color">
+            <MenuFlyoutItem Text="Black" Clicked="setPenColor" />
+            <MenuFlyoutItem Text="Red" Clicked="setPenColor" />
+            <MenuFlyoutItem Text="Blue" Clicked="setPenColor" />
+            <MenuFlyoutItem Text="Green" Clicked="setPenColor" />
+            <MenuFlyoutItem Text="Yellow" Clicked="setPenColor" />
+            <MenuFlyoutItem Text="Purple" Clicked="setPenColor" />
+            
+
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>
+
+    <ScrollView Orientation="Both">
+        <VerticalStackLayout x:Name="Entire">
+
+            <!-- A Place to put the currently selected cell "namd" and "value" -->
+            <Border
+                StrokeThickness="2"
+                HeightRequest="40">
+                <HorizontalStackLayout BackgroundColor="LightGray">
+                    <Label x:Name="filler" WidthRequest="200" BackgroundColor="LightGray"/>
+                    <Label x:Name="selectedCellName" WidthRequest="300" VerticalTextAlignment="Center" BackgroundColor="LightGray" HorizontalTextAlignment="Center" TextColor="Black"/>
+                    <Entry x:Name="selectedCellContent" WidthRequest="300" BackgroundColor="LightGray" Completed="topContentsCompleted" TextChanged="topContentsChanged"  VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black"/>
+                    <Label x:Name="selectedCellValue" WidthRequest="300" VerticalTextAlignment="Center" BackgroundColor="LightGray" HorizontalTextAlignment="Center" TextColor="Black"/>
+                </HorizontalStackLayout>
+            </Border>
+
+            <!-- the column headers: A, B, C, ... -->
+            <HorizontalStackLayout x:Name="TopLabels" BackgroundColor="LightBlue"/>
+
+            <!-- the row headers: 1, 2, 3, ... -->
+            <VerticalStackLayout x:Name="SideLabels" BackgroundColor="LightBlue"/>
+
+
+            <!-- the Grid of Spreadsheet GUI Cells -->
+            <ScrollView
+                        x:Name="Table"
+                        Orientation="Both"
+                        HorizontalOptions="FillAndExpand"
+                        HorizontalScrollBarVisibility="Always">
+                <HorizontalStackLayout x:Name="table" BackgroundColor="LightGoldenrodYellow">
+                    <VerticalStackLayout x:Name="LeftLabels"  BackgroundColor="LightBlue"></VerticalStackLayout>
+                    <VerticalStackLayout x:Name="Grid"        BackgroundColor="LightGoldenrodYellow"></VerticalStackLayout>
+                </HorizontalStackLayout>
+            </ScrollView>
+        </VerticalStackLayout>
+    </ScrollView>
+
+
+</ContentPage>
+    
+    
