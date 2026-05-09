@@ -10,15 +10,23 @@ export type Snapshot = {
 
 const jsonHeaders = { 'Content-Type': 'application/json' }
 
+/** Same-origin `/api` when empty (local Vite proxy or Vercel rewrite). Set `VITE_API_URL` for direct cross-origin API calls. */
+const API_ROOT = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '')
+
+function apiUrl(path: string): string {
+  const p = path.startsWith('/') ? path : `/${path}`
+  return API_ROOT ? `${API_ROOT}${p}` : p
+}
+
 export async function createSession(): Promise<string> {
-  const r = await fetch('/api/sessions', { method: 'POST' })
+  const r = await fetch(apiUrl('/api/sessions'), { method: 'POST' })
   if (!r.ok) throw new Error('Could not create session')
   const data = (await r.json()) as { sessionId: string }
   return data.sessionId
 }
 
 export async function getSnapshot(sessionId: string): Promise<Snapshot> {
-  const r = await fetch(`/api/sessions/${sessionId}/snapshot`)
+  const r = await fetch(apiUrl(`/api/sessions/${sessionId}/snapshot`))
   if (!r.ok) throw new Error('Could not load snapshot')
   return r.json() as Promise<Snapshot>
 }
@@ -29,7 +37,7 @@ export async function commitCell(
   content: string,
 ): Promise<Snapshot> {
   const r = await fetch(
-    `/api/sessions/${sessionId}/cells/${encodeURIComponent(cellName)}/commit`,
+    apiUrl(`/api/sessions/${sessionId}/cells/${encodeURIComponent(cellName)}/commit`),
     { method: 'POST', headers: jsonHeaders, body: JSON.stringify({ content }) },
   )
   const body = await r.json().catch(() => ({}))
@@ -43,13 +51,13 @@ export async function commitCell(
 }
 
 export async function resetSession(sessionId: string): Promise<Snapshot> {
-  const r = await fetch(`/api/sessions/${sessionId}/reset`, { method: 'POST' })
+  const r = await fetch(apiUrl(`/api/sessions/${sessionId}/reset`), { method: 'POST' })
   if (!r.ok) throw new Error('Could not reset')
   return r.json() as Promise<Snapshot>
 }
 
 export async function loadXml(sessionId: string, xml: string): Promise<Snapshot> {
-  const r = await fetch(`/api/sessions/${sessionId}/load`, {
+  const r = await fetch(apiUrl(`/api/sessions/${sessionId}/load`), {
     method: 'POST',
     headers: { 'Content-Type': 'application/xml; charset=utf-8' },
     body: xml,
@@ -65,7 +73,7 @@ export async function loadXml(sessionId: string, xml: string): Promise<Snapshot>
 }
 
 export async function saveSpreadsheet(sessionId: string): Promise<Blob> {
-  const r = await fetch(`/api/sessions/${sessionId}/save`)
+  const r = await fetch(apiUrl(`/api/sessions/${sessionId}/save`))
   if (!r.ok) throw new Error('Could not save')
   return r.blob()
 }

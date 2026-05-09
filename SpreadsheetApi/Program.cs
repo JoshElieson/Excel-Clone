@@ -14,8 +14,17 @@ builder.Services.ConfigureHttpJsonOptions(o =>
 });
 
 builder.Services.AddSingleton<SessionStore>();
+
+var corsOrigins = new List<string> { "http://localhost:5173", "http://127.0.0.1:5173" };
+var extraOrigins = builder.Configuration["CORS_ORIGINS"];
+if (!string.IsNullOrWhiteSpace(extraOrigins))
+{
+    foreach (var o in extraOrigins.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
+        corsOrigins.Add(o);
+}
+
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
-    policy.WithOrigins("http://localhost:5173", "http://127.0.0.1:5173")
+    policy.WithOrigins(corsOrigins.ToArray())
         .AllowAnyHeader()
         .AllowAnyMethod()));
 
